@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射接口-->
+<mapper namespace="com.zd.mapper.UserMapper">
+
+<!-- 通过name查询用户名是否存在 -->
+<select id="findUserByName" parameterType="User" resultType="User">
+	select * from user where username = #{username}
+</select>
+
+<!-- 添加用户 -->
+<select id="addUser" parameterType="User">
+	insert into user(uid,username,password,email,sex,telephone,udate)
+	values(#{uid},#{username},#{password},#{email},#{sex},#{telephone},#{udate})
+</select>
+
+<!-- 登录验证user -->
+<select id="findUser" parameterType="User" resultType="User">
+	select * from user where username = #{username} and password = #{password}
+</select>
+
+<!-- 获得商品总条数 -->
+<select id="findProtoTalCount" resultType="int">
+	select count(*) from product
+</select>
+
+<!-- 获得分页的数据 -->
+<select id="findfindProPageData" parameterType="com.zd.model.vo.PageBean" resultType="Product">
+	select * from product
+	limit #{index},#{currentCount}
+</select>
+
+<!-- 站内搜索 -->
+<select id="findProBySearch" parameterType="Map" resultType="Product">
+	select * from product where 1=1
+	<if test="word !=null and word !=''">
+		and pname like '${word}%'
+	</if>
+	limit #{index},#{size}
+</select>
+
+<!-- 手机总条数 -->
+<select id="findProToTalCountPhone" resultType="int">
+	select count(*) from product where cid = '1'
+</select>
+
+<!-- 电脑总条数 -->
+<select id="findProToTalCountCom" resultType="int">
+	select count(*) from product where cid = '2'
+</select>
+
+<!-- 衣服总条数 -->
+<select id="findProToTalCountCloth" resultType="int">
+	select count(*) from product where cid = '3'
+</select>
+
+<!-- 查询商品 -->
+<select id="findPro" parameterType="Map" resultType="Product">
+	select * from product where cid = #{cid}
+	limit #{index},#{currentCount}
+</select>
+
+<!-- 通过pid查商品 -->
+<select id="findProByPid" resultType="Product">
+	select * from product
+	where pid = #{pid}
+</select>
+
+<!-- 添加订单 -->
+<select id="addCart" parameterType="Orders">
+	insert into orders(oid,pname,number,price,userid)
+	values(#{oid},#{pname},#{number},#{price},#{userid})
+</select>
+
+<!-- 通过id查询订单 -->
+<select id="findOrdersByUid" resultType="Orders">
+	select *
+	from orders
+	where userid = #{uid}
+</select>
+
+<!-- 购买所有商品 -->
+<delete id="shopAll">
+	delete from orders where userid = #{uid}
+</delete>
+
+<!-- 删除单个通过oid -->
+<delete id="deleteByOid">
+	delete from orders where oid = #{oid}
+</delete>
+
+<!-- 购买oid订单 -->
+<delete id="shopByOid">
+	delete from orders where oid = #{oid}
+</delete>
+</mapper>

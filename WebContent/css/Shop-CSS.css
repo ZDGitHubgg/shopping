@@ -1,0 +1,25 @@
+#div1{margin: auto; width: 70%;}
+			#div-left{float: left;}
+			#div-right{float: right;margin-top: 30px;}
+			#div-right a{float: right; font-family: "微软雅黑";font-size: 15px;text-decoration: none;margin-left: 10px;}
+			.clear{
+				clear: both;
+			}
+			#div2{background-color: gray;height: 50px;width: 100%;padding-top: 5px;}
+			ul li{display: inline;}
+			ul a{text-decoration: none;}
+			ul a:link{color: white;}
+			ul a:hover{color: green;}
+			ul a:visited{color: white;}
+			ul a:active{color: red;}
+			#div2-left{width: 50%;float: left;}
+			#div2-right{width: 50%;float: left;margin-top: 20px;}
+			/* #div2-right button{float: right;height: 22px;background-color: green;}
+			#div2-right input{float: right;} */
+			#div-left{width: 25%;float: left;}
+			#div-right{width: 75%;float: left;}
+			.pro{float: left;width: 25%;text-align: center;}
+			.pro p{margin-top: 0px;}
+			#div3{text-align: center;margin-top: 10px;margin-bottom: 0px;}
+			#div3 a{text-decoration: none;margin-left: 10px;}
+			#div4{text-align: center;font-family: "楷体";font-size: 20px;margin-top: 0px;}

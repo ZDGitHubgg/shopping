@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射接口-->
+<mapper namespace="com.zd.mapper.AdminMapper">
+
+	<!-- 通过aname，apassword查询admin -->
+	<select id="findAdmin" parameterType="Admin" resultType="Admin">
+		select * from administrator where aname = #{aname} and apassword=#{apassword}
+	</select>
+	
+	<!-- 获得商品总条数 -->
+	<select id="findProductTotalCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+	<!-- 获得pageData -->
+	<select id="findPageBean" parameterType="com.zd.model.vo.PageBean" resultType="Product">
+		select * from product limit #{index},#{currentCount}
+	</select>
+	
+	<!-- 获得商品分类 -->
+	<select id="findCategory" resultType="Category">
+		select * from category
+	</select>
+	
+	<!-- 添加商品 -->
+	<insert id="addProduct" parameterType="Product">
+		insert into product(pid,pname,market_price,shop_price,pimage,pdate,is_hot,pdesc,pflag,cid)
+		values(#{pid},#{pname},#{market_price},#{shop_price},#{pimage},
+		#{pdate},#{is_hot},#{pdesc},#{pflag},#{cid}) 
+	</insert>
+	
+	<!-- 通过pid删除商品 -->
+	<delete id="deleteProductBypid" parameterType="Product">
+		delete from product where pid = #{pid}
+	</delete>
+	
+	<!-- 通过pid找到商品 -->
+	<select id="findProductByPid" parameterType="Product" resultType="Product">
+		select * from product where pid = #{pid}
+	</select>
+	
+	<!-- 编辑商品 -->
+	<select id="updateProduct" parameterType="Product">
+		update product
+		<set>
+			<if test="pname !=null and pname !=''">
+				pname = #{pname},
+			</if>
+			<if test="market_price !=null">
+				market_price = #{market_price},
+			</if>
+			<if test="shop_price !=null">
+				shop_price = #{shop_price},
+			</if>
+			<if test="pimage !=null and pimage !=''">
+				pimage = #{pimage},
+			</if>
+			<if test="pdate !=null">
+				pdate = #{pdate},
+			</if>
+			<if test="is_hot !=null">
+				is_hot = #{is_hot},
+			</if>
+			<if test="pdesc !=null and pdesc !=''">
+				pdesc = #{pdesc},
+			</if>
+			<if test="pflag !=null">
+				pflag = #{pflag},
+			</if>
+			<if test="cid !=null and cid !=''">
+				cid = #{cid},
+			</if>
+		</set>
+		where pid = #{pid}
+	</select>
+	
+	<!-- 通过search找到商品 -->
+	<select id="findProductLsitBySearch" parameterType="com.zd.model.vo.Condition" resultType="Product">
+		select * from product where 1=1
+		<if test="pname !=null and pname !=''">
+			and pname like '%${pname}%'
+		</if>
+		<if test="is_hot !=null">
+			and is_hot = #{is_hot}
+		</if>
+		<if test="cid !=null and cid !=''">
+			and cid = #{cid}
+		</if>
+	</select>
+	
+	<!-- =======================商品分类模块=========================== -->
+	<!-- 添加分类 -->
+	<insert id="addCategory" parameterType="Category">
+		insert into category(cid,cname) values(#{cid},#{cname})
+	</insert>
+	
+	<!-- 删除所选分类 -->
+	<delete id="deleteCategoryByCid" parameterType="Category">
+		delete from category where cid = #{cid}
+	</delete>
+	
+	<!-- ======================用户管理模块============================== -->
+	<!-- 查询所有用户 -->
+	<select id="selectUserList" resultType="User">
+		select * from user
+	</select>
+	
+	<!-- 通过uid删除用户 -->
+	<delete id="deleteUserByUid" parameterType="User">
+		delete from user where uid = #{uid}
+	</delete>
+	
+	<!-- ========================订单管理模块=============================== -->
+	<!-- 查询所有订单 -->
+	<select id="findOrderList" resultType="Orders">
+		select * from orders
+	</select>
+	
+	<!-- 通过oid删除订单 -->
+	<delete id="deleteOrderByOid" parameterType="Orders">
+		delete from orders where oid = #{oid}
+	</delete>
+</mapper>
